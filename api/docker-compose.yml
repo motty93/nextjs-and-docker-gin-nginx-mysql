@@ -10,7 +10,7 @@ services:
   api:
     build: ./docker/api
     volumes:
-      - ./api:/go/src/project
+      - ./:/go/src/project
   proxy:
     build: ./docker/nginx
     ports:
