@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  mysql:
+    image: ./docker/mysql
+    volumes:
+      - gin-mysql-data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+  api:
+    build: ./docker/api
+    volumes:
+      - ./api:/go/src/project
+  proxy:
+    build: ./docker/nginx
+    ports:
+      - '80:80'
