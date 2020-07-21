@@ -1,17 +1,21 @@
-FROM golang:1.14.6-alpine3.12
-ENV APP_ROOT /go/src/app
+FROM golang:1.14.6-alpine3.12 as build
+MAINTAINER https://github.com/motty93
 
-COPY Gopkg.toml ${APP_ROOT}/
-COPY main.go ${APP_ROOT}/
+ENV APP_ROOT /go/src/app
+ENV GO111MODULE=on
 
 WORKDIR ${APP_ROOT}
+COPY . .
 
 RUN apk update \
-    && apk add --no-cache git \
+    && apk add --no-cache gcc g++ make curl git \
     && git config --global http.postBuffer 524288000
 
-RUN go get -u github.com/codegangsta/gin \
-    && go get -u github.com/gin-gonic/gin \
-    && go get -u github.com/oxequa/realize
+# go get module
+RUN go get gopkg.in/urfave/cli.v2@master \
+    && go get github.com/oxequa/realize \
+    && go get github.com/gin-gonic/gin \
+    && go mod download
 
+EXPOSE 8020
 CMD ["realize", "start"]
