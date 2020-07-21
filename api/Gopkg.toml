@@ -1,7 +1,0 @@
-[[constraint]]
-  name = "github.com/gin-gonic/gin"
-  version = "1.2.0"
-
-[prune]
-  go-test = true
-  unused-packages = true
