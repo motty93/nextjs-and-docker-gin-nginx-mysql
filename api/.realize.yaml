@@ -8,11 +8,15 @@ server:
   port: 8020
   host: localhost
 schema:
-- name: app
+- name: api
   path: .
   commands:
+    install:
+      status: true
+      method: go build -o main
     run:
       status: true
+      method: ./main
   watcher:
     extensions:
     - go
