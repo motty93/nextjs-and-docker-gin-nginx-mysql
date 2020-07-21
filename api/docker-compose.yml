@@ -2,16 +2,40 @@ version: '3'
 
 services:
   mysql:
-    image: ./docker/mysql
+    build:
+      context: ./docker/mysql
+      dockerfile: ./Dockerfile
+    image: 'gin-mysql-image'
+    container_name: 'gin-db-mysql'
     volumes:
       - gin-mysql-data:/var/lib/mysql
     ports:
       - '3306:3306'
+
   api:
-    build: ./docker/api
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    image: 'gin-api-image'
+    container_name: 'gin-api'
     volumes:
-      - ./:/go/src/api
+      - .:/go/src/app
+      - ./vendor:/go/src/app/vendor
+    ports:
+      - '8020:8020'
+    tty: true
+
   proxy:
-    build: ./docker/nginx
+    build:
+      context: ./docker/nginx
+      dockerfile: ./Dockerfile
+    image: 'gin-nginx-image'
+    container_name: 'gin-proxy'
     ports:
       - '80:80'
+    depends_on:
+      - 'api'
+
+volumes:
+  gin-mysql-data:
+  vendor:
