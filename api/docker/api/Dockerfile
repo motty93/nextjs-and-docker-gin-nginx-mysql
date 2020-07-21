@@ -1,4 +1,4 @@
-FROM golang:1.14.6-alpine3.12 as build
+FROM golang:1.14.6-alpine3.12
 MAINTAINER https://github.com/motty93
 
 ENV APP_ROOT /go/src/app
