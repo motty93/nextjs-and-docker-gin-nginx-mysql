@@ -3,6 +3,8 @@
 
 ```
 $ docker-compose build
+
+$ cd frontend; yarn
 ```
 
 ### start
