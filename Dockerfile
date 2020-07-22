@@ -1,7 +1,7 @@
 ARG GO_VERSION=1.14.6
 ARG ALPINE_VERSION=3.12
 
-FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS builder
+FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION}
 MAINTAINER https://github.com/motty93
 ENV APP_ROOT /go/src/app
 ENV GO111MODULE=on
