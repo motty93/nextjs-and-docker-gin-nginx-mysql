@@ -6,6 +6,7 @@ services:
       context: ./docker/mysql
       dockerfile: ./Dockerfile
     image: gin-mysql-image
+    container_name: gin-db-container
     ports:
       - '3306:3306'
     volumes:
@@ -16,31 +17,28 @@ services:
       - .env
 
   api:
-    build:
-      context: .
-      dockerfile: ./docker/api/Dockerfile
+    build: .
     image: gin-api-image
+    container_name: gin-api-container
     tty: true
+    command: sh -c "cd api && air"
     ports:
       - '8080:8080'
     volumes:
       - .:/go/src/app
-    environment:
-      GO111MODULE: 'on'
-    env_file:
-      - .env
     depends_on:
       - db
 
-  # proxy:
-  #   build:
-  #     context: ./docker/nginx
-  #     dockerfile: ./Dockerfile
-  #   image: gin-nginx-image
-  #   ports:
-  #     - '80:80'
-  #   depends_on:
-  #     - api
+  proxy:
+    build:
+      context: ./docker/nginx
+      dockerfile: ./Dockerfile
+    image: gin-nginx-image
+    container_name: gin-proxy-container
+    ports:
+      - '8020:8020'
+    depends_on:
+      - api
 
 volumes:
   gin-mysql-data:
