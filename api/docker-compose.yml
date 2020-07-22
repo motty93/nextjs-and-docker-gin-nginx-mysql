@@ -22,7 +22,7 @@ services:
     image: gin-api-image
     tty: true
     ports:
-      - '8020:8020'
+      - '8080:8080'
     volumes:
       - .:/go/src/app
     environment:

@@ -9,6 +9,6 @@ func main() {
 			"message": "ping",
 		})
 	})
-	// ポートを設定しています。
+	// ポートを設定
 	router.Run(":8020")
 }
